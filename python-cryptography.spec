@@ -18,7 +18,6 @@ BuildRequires:	openssl-devel
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-cffi >= 0.8
 BuildRequires:	python-six >= 1.4.1
-BuildRequires:	rpmbuild(macros) >= 1.219
 %endif
 %if %{with python3}
 BuildRequires:	python3-devel >= 3.2
@@ -26,6 +25,7 @@ BuildRequires:	python3-cffi >= 0.8
 BuildRequires:	python3-six >= 1.4.1
 %endif
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.612
 Requires:	python-cffi >= 0.8
 Requires:	python-six >= 1.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
