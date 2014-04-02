@@ -6,12 +6,12 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	0.2.2
+Version:	0.3
 Release:	1
 License:	Apache v2.0
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	f002a442c8c5c7463bf8d2f11f6c3128
+# Source0-md5:	1a9f2520acfef9489ac42fdc9a7be441
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel
 %if %{with python2}
@@ -108,9 +108,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %{__python} setup.py \
-	build \
-		--build-base build-2 \
-	install \
+	build	--build-base build-2 \
+	install --skip-build \
 		--optimize=2 \
 		--root=$RPM_BUILD_ROOT
 
@@ -119,9 +118,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python3}
 %{__python3} setup.py \
-	build \
-		--build-base build-3 \
-	install \
+	build	--build-base build-3 \
+	install	--skip-build \
 		--optimize=2 \
 		--root=$RPM_BUILD_ROOT
 %endif
@@ -134,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.rst README.rst
 %dir %{py_sitedir}/cryptography
-%attr(755,root,root) %{py_sitedir}/cryptography/_cffi__*.so
+%attr(755,root,root) %{py_sitedir}/cryptography/_*_cffi_*.so
 %{py_sitedir}/cryptography/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat
 %{py_sitedir}/cryptography/hazmat/*.py[co]
@@ -158,6 +156,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/cryptography/hazmat/primitives/ciphers/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives/kdf
 %{py_sitedir}/cryptography/hazmat/primitives/kdf/*.py[co]
+%dir %{py_sitedir}/cryptography/hazmat/primitives/twofactor
+%{py_sitedir}/cryptography/hazmat/primitives/twofactor/*.py[co]
 %{py_sitedir}/cryptography-%{version}-py*.egg-info
 %endif
 
@@ -166,7 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.rst README.rst
 %dir %{py3_sitedir}/cryptography
-%attr(755,root,root) %{py3_sitedir}/cryptography/_cffi__*.so
+%attr(755,root,root) %{py3_sitedir}/cryptography/_*_cffi_*.so
 %{py3_sitedir}/cryptography/*.py
 %{py3_sitedir}/cryptography/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat
@@ -202,5 +202,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/primitives/kdf
 %{py3_sitedir}/cryptography/hazmat/primitives/kdf/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/kdf/__pycache__
+%dir %{py3_sitedir}/cryptography/hazmat/primitives/twofactor
+%{py3_sitedir}/cryptography/hazmat/primitives/twofactor/*.py
+%{py3_sitedir}/cryptography/hazmat/primitives/twofactor/__pycache__
 %{py3_sitedir}/cryptography-%{version}-py*.egg-info
 %endif
