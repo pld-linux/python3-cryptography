@@ -6,12 +6,12 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	0.5
+Version:	0.5.2
 Release:	1
 License:	Apache v2.0
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	584e5be4cc02be01e04d0fbdd5ea1e72
+# Source0-md5:	8c2d381ef263653b640a7a5d14618e4c
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 0.9.8
 %if %{with python2}
