@@ -6,12 +6,12 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	0.5.2
-Release:	2
-License:	Apache v2.0
+Version:	0.8.2
+Release:	1
+License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	8c2d381ef263653b640a7a5d14618e4c
+# Source0-md5:	7d33499e851300c194cbb0396de72462
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 0.9.8
 %if %{with python2}
@@ -130,7 +130,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS.rst README.rst
+%doc AUTHORS.rst README.rst LICENSE.APACHE LICENSE.BSD
 %dir %{py_sitedir}/cryptography
 %attr(755,root,root) %{py_sitedir}/cryptography/_*_cffi_*.so
 %{py_sitedir}/cryptography/*.py[co]
@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-cryptography
 %defattr(644,root,root,755)
-%doc AUTHORS.rst README.rst
+%doc AUTHORS.rst README.rst LICENSE.APACHE LICENSE.BSD
 %dir %{py3_sitedir}/cryptography
 %attr(755,root,root) %{py3_sitedir}/cryptography/_*_cffi_*.so
 %{py3_sitedir}/cryptography/*.py
