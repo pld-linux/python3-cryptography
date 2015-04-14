@@ -15,13 +15,13 @@ Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{v
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 0.9.8
 %if %{with python2}
-BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-cffi >= 0.8
+BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-six >= 1.4.1
 %endif
 %if %{with python3}
-BuildRequires:	python3-devel >= 1:3.2
 BuildRequires:	python3-cffi >= 0.8
+BuildRequires:	python3-devel >= 1:3.2
 BuildRequires:	python3-six >= 1.4.1
 %endif
 BuildRequires:	rpm-pythonprov
@@ -50,7 +50,7 @@ Pythona 2.6-2.7, Pythona 3.2+ oraz PyPy.
 
 cryptography zawiera zarówno funkcje wysokopoziomowe, jak i
 niskopoziomowe interfejsy do popularnych algorytmów kryptograficznych,
-takich jak szyfry symetryczne, skróty wiadomości czy funkcje 
+takich jak szyfry symetryczne, skróty wiadomości czy funkcje
 wyprowadzające klucze.
 
 Ten pakiet zawiera moduły Pythona 2.
@@ -82,7 +82,7 @@ Pythona 2.6-2.7, Pythona 3.2+ oraz PyPy.
 
 cryptography zawiera zarówno funkcje wysokopoziomowe, jak i
 niskopoziomowe interfejsy do popularnych algorytmów kryptograficznych,
-takich jak szyfry symetryczne, skróty wiadomości czy funkcje 
+takich jak szyfry symetryczne, skróty wiadomości czy funkcje
 wyprowadzające klucze.
 
 Ten pakiet zawiera moduły Pythona 3.
@@ -114,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 		--root=$RPM_BUILD_ROOT
 
 %py_postclean
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/cryptography/hazmat/bindings/__pycache__/*.c
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/cryptography/hazmat/primitives/src/*.[ch]
 %endif
 
 %if %{with python3}
@@ -122,6 +124,8 @@ rm -rf $RPM_BUILD_ROOT
 	install	--skip-build \
 		--optimize=2 \
 		--root=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/cryptography/hazmat/primitives/src/*.[ch]
 %endif
 
 %clean
