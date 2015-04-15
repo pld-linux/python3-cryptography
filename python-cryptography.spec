@@ -152,6 +152,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/cryptography/hazmat/bindings/commoncrypto/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/bindings/openssl
 %{py_sitedir}/cryptography/hazmat/bindings/openssl/*.py[co]
+%dir %{py_sitedir}/cryptography/hazmat/primitives/interfaces
+%{py_sitedir}/cryptography/hazmat/primitives/interfaces/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives
 %{py_sitedir}/cryptography/hazmat/primitives/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives/asymmetric
@@ -194,6 +196,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/openssl
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/__pycache__
+%dir %{py3_sitedir}/cryptography/hazmat/primitives/interfaces
+%{py3_sitedir}/cryptography/hazmat/primitives/interfaces/*.py
+%{py3_sitedir}/cryptography/hazmat/primitives/interfaces/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/primitives
 %{py3_sitedir}/cryptography/hazmat/primitives/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/__pycache__
