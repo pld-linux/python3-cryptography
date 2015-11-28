@@ -99,12 +99,12 @@ Ten pakiet zawiera moduły Pythona 3.
 export CFLAGS="%{rpmcflags}"
 
 %if %{with python2}
-%{__python} setup.py build \
+%py_build \
 	--build-base build-2
 %endif
 
 %if %{with python2}
-%{__python3} setup.py build \
+%py3_build \
 	--build-base build-3
 %endif
 
@@ -112,11 +112,7 @@ export CFLAGS="%{rpmcflags}"
 rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
-%{__python} setup.py \
-	build	--build-base build-2 \
-	install --skip-build \
-		--optimize=2 \
-		--root=$RPM_BUILD_ROOT
+%py_install
 
 %py_postclean
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/cryptography/hazmat/bindings/__pycache__/*.c
@@ -124,11 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %if %{with python3}
-%{__python3} setup.py \
-	build	--build-base build-3 \
-	install	--skip-build \
-		--optimize=2 \
-		--root=$RPM_BUILD_ROOT
+%py3_install
 
 %{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/cryptography/hazmat/primitives/src/*.[ch]
 %endif
