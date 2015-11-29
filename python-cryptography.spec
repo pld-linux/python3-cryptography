@@ -15,7 +15,7 @@ Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{v
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 0.9.8
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.612
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-cffi >= 0.8
 BuildRequires:	python-devel >= 1:2.6
