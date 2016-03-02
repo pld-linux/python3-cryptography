@@ -20,14 +20,14 @@ BuildRequires:	rpmbuild(macros) >= 1.710
 BuildRequires:	python-cffi >= 1.4.1
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-enum34
-BuildRequires:	python-pyasn1
+BuildRequires:	python-pyasn1 >= 0.1.8
 BuildRequires:	python-setuptools
 BuildRequires:	python-six >= 1.4.1
 %endif
 %if %{with python3}
 BuildRequires:	python3-cffi >= 1.4.1
 BuildRequires:	python3-devel >= 1:3.2
-BuildRequires:	python3-pyasn1
+BuildRequires:	python3-pyasn1 >= 0.1.8
 BuildRequires:	python3-setuptools
 BuildRequires:	python3-six >= 1.4.1
 %endif
