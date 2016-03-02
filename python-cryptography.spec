@@ -6,12 +6,12 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	0.8.2
-Release:	4
+Version:	1.2.3
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	7d33499e851300c194cbb0396de72462
+# Source0-md5:	5474d2b3e8c7555a60852e48d2743f85
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 0.9.8
 BuildRequires:	rpm-pythonprov
@@ -115,14 +115,10 @@ rm -rf $RPM_BUILD_ROOT
 %py_install
 
 %py_postclean
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/cryptography/hazmat/bindings/__pycache__/*.c
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/cryptography/hazmat/primitives/src/*.[ch]
 %endif
 
 %if %{with python3}
 %py3_install
-
-%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/cryptography/hazmat/primitives/src/*.[ch]
 %endif
 
 %clean
@@ -133,7 +129,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.rst README.rst LICENSE.APACHE LICENSE.BSD
 %dir %{py_sitedir}/cryptography
-%attr(755,root,root) %{py_sitedir}/cryptography/_*_cffi_*.so
 %{py_sitedir}/cryptography/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat
 %{py_sitedir}/cryptography/hazmat/*.py[co]
@@ -145,6 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/cryptography/hazmat/backends/openssl/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/bindings
 %{py_sitedir}/cryptography/hazmat/bindings/*.py[co]
+%attr(755,root,root) %{py_sitedir}/cryptography/hazmat/bindings/_*.so
 %dir %{py_sitedir}/cryptography/hazmat/bindings/commoncrypto
 %{py_sitedir}/cryptography/hazmat/bindings/commoncrypto/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/bindings/openssl
@@ -161,6 +157,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/cryptography/hazmat/primitives/kdf/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives/twofactor
 %{py_sitedir}/cryptography/hazmat/primitives/twofactor/*.py[co]
+%dir %{py_sitedir}/cryptography/x509
+%{py_sitedir}/cryptography/x509/*.py[co]
 %{py_sitedir}/cryptography-%{version}-py*.egg-info
 %endif
 
@@ -169,7 +167,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.rst README.rst LICENSE.APACHE LICENSE.BSD
 %dir %{py3_sitedir}/cryptography
-%attr(755,root,root) %{py3_sitedir}/cryptography/_*_cffi_*.so
 %{py3_sitedir}/cryptography/*.py
 %{py3_sitedir}/cryptography/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat
@@ -187,6 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/bindings
 %{py3_sitedir}/cryptography/hazmat/bindings/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/__pycache__
+%attr(755,root,root) %{py3_sitedir}/cryptography/hazmat/bindings/_*.so
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/commoncrypto
 %{py3_sitedir}/cryptography/hazmat/bindings/commoncrypto/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/commoncrypto/__pycache__
@@ -211,5 +209,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/primitives/twofactor
 %{py3_sitedir}/cryptography/hazmat/primitives/twofactor/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/twofactor/__pycache__
+%dir %{py3_sitedir}/cryptography/x509
+%{py3_sitedir}/cryptography/x509/*.py
+%{py3_sitedir}/cryptography/x509/__pycache__
 %{py3_sitedir}/cryptography-%{version}-py*.egg-info
 %endif
