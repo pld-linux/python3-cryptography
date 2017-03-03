@@ -7,15 +7,15 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	1.3.1
-Release:	2
+Version:	1.7.2
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/cryptography/
-Source0:	https://pypi.python.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	bc8148d2ff2d80fef8ef2d2e856b3a7f
+Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
+# Source0-md5:	fade66de437392ed1ba6980768626204
 URL:		https://cryptography.io/
-BuildRequires:	openssl-devel >= 0.9.8
+BuildRequires:	openssl-devel >= 1.0.1
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
@@ -57,6 +57,7 @@ BuildRequires:	python3-pyasn1_modules
 BuildRequires:	python3-pytest
 %endif
 %endif
+Requires:	openssl >= 1.0.1
 Requires:	python-cffi >= 1.4.1
 Requires:	python-six >= 1.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -90,9 +91,10 @@ Ten pakiet zawiera moduły Pythona 2.
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Group:		Libraries/Python
+Requires:	openssl >= 1.0.1
 Requires:	python3-cffi >= 1.4.1
 %if "%{py3_ver}" < "3.4"
-BuildRequires:	python3-enum34
+Requires:	python3-enum34
 %endif
 Requires:	python3-six >= 1.4.1
 
