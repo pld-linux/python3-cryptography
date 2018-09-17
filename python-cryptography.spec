@@ -7,13 +7,13 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	1.7.2
-Release:	3
+Version:	2.3.1
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	fade66de437392ed1ba6980768626204
+# Source0-md5:	2b5e8269c43c9b9ab54fc8c75ba3c7ac
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.0.1
 BuildRequires:	rpm-pythonprov
@@ -163,19 +163,13 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/cryptography/hazmat/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/backends
 %{py_sitedir}/cryptography/hazmat/backends/*.py[co]
-%dir %{py_sitedir}/cryptography/hazmat/backends/commoncrypto
-%{py_sitedir}/cryptography/hazmat/backends/commoncrypto/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/backends/openssl
 %{py_sitedir}/cryptography/hazmat/backends/openssl/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/bindings
 %{py_sitedir}/cryptography/hazmat/bindings/*.py[co]
 %attr(755,root,root) %{py_sitedir}/cryptography/hazmat/bindings/_*.so
-%dir %{py_sitedir}/cryptography/hazmat/bindings/commoncrypto
-%{py_sitedir}/cryptography/hazmat/bindings/commoncrypto/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/bindings/openssl
 %{py_sitedir}/cryptography/hazmat/bindings/openssl/*.py[co]
-%dir %{py_sitedir}/cryptography/hazmat/primitives/interfaces
-%{py_sitedir}/cryptography/hazmat/primitives/interfaces/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives
 %{py_sitedir}/cryptography/hazmat/primitives/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives/asymmetric
@@ -204,9 +198,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/backends
 %{py3_sitedir}/cryptography/hazmat/backends/*.py
 %{py3_sitedir}/cryptography/hazmat/backends/__pycache__
-%dir %{py3_sitedir}/cryptography/hazmat/backends/commoncrypto
-%{py3_sitedir}/cryptography/hazmat/backends/commoncrypto/*.py
-%{py3_sitedir}/cryptography/hazmat/backends/commoncrypto/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/backends/openssl
 %{py3_sitedir}/cryptography/hazmat/backends/openssl/*.py
 %{py3_sitedir}/cryptography/hazmat/backends/openssl/__pycache__
@@ -214,15 +205,9 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/cryptography/hazmat/bindings/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/__pycache__
 %attr(755,root,root) %{py3_sitedir}/cryptography/hazmat/bindings/_*.so
-%dir %{py3_sitedir}/cryptography/hazmat/bindings/commoncrypto
-%{py3_sitedir}/cryptography/hazmat/bindings/commoncrypto/*.py
-%{py3_sitedir}/cryptography/hazmat/bindings/commoncrypto/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/openssl
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/__pycache__
-%dir %{py3_sitedir}/cryptography/hazmat/primitives/interfaces
-%{py3_sitedir}/cryptography/hazmat/primitives/interfaces/*.py
-%{py3_sitedir}/cryptography/hazmat/primitives/interfaces/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/primitives
 %{py3_sitedir}/cryptography/hazmat/primitives/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/__pycache__
