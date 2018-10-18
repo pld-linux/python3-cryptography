@@ -41,9 +41,6 @@ BuildRequires:	python-pytest
 %if %{with python3}
 BuildRequires:	python3-cffi >= 1.4.1
 BuildRequires:	python3-devel >= 1:3.3
-%if "%{py3_ver}" < "3.4"
-BuildRequires:	python3-enum34
-%endif
 BuildRequires:	python3-pyasn1 >= 0.1.8
 BuildRequires:	python3-setuptools >= 11.3
 BuildRequires:	python3-six >= 1.4.1
@@ -61,6 +58,9 @@ Requires:	openssl >= 1.0.1
 Requires:	python-cffi >= 1.4.1
 Requires:	python-six >= 1.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# modern Python provides those
+%define _noautoreq python3egg.ipaddress python3egg.enum34
 
 %description
 cryptography is a package designed to expose cryptographic recipes and
