@@ -16,7 +16,7 @@ Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptogra
 # Source0-md5:	2b5e8269c43c9b9ab54fc8c75ba3c7ac
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.0.1
-BuildRequires:	rpm-pythonprov
+BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
 BuildRequires:	python-cffi >= 1.4.1
@@ -40,7 +40,7 @@ BuildRequires:	python-pytest
 %endif
 %if %{with python3}
 BuildRequires:	python3-cffi >= 1.4.1
-BuildRequires:	python3-devel >= 1:3.3
+BuildRequires:	python3-devel >= 1:3.4
 BuildRequires:	python3-pyasn1 >= 0.1.8
 BuildRequires:	python3-setuptools >= 11.3
 BuildRequires:	python3-six >= 1.4.1
@@ -58,9 +58,6 @@ Requires:	openssl >= 1.0.1
 Requires:	python-cffi >= 1.4.1
 Requires:	python-six >= 1.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# modern Python provides those
-%define _noautoreq python3egg.ipaddress python3egg.enum34
 
 %description
 cryptography is a package designed to expose cryptographic recipes and
@@ -93,9 +90,6 @@ Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Group:		Libraries/Python
 Requires:	openssl >= 1.0.1
 Requires:	python3-cffi >= 1.4.1
-%if "%{py3_ver}" < "3.4"
-Requires:	python3-enum34
-%endif
 Requires:	python3-six >= 1.4.1
 
 %description -n python3-cryptography
