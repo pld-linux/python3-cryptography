@@ -7,19 +7,19 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	2.3.1
-Release:	2
+Version:	2.4.1
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	2b5e8269c43c9b9ab54fc8c75ba3c7ac
+# Source0-md5:	464f180ff64622760cca7167f97b3ff4
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.0.1
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
-BuildRequires:	python-cffi >= 1.4.1
+BuildRequires:	python-cffi >= 1.7
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-enum34
 BuildRequires:	python-pyasn1 >= 0.1.8
@@ -39,7 +39,7 @@ BuildRequires:	python-pytest
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-cffi >= 1.4.1
+BuildRequires:	python3-cffi >= 1.7
 BuildRequires:	python3-devel >= 1:3.4
 BuildRequires:	python3-pyasn1 >= 0.1.8
 BuildRequires:	python3-setuptools >= 11.3
@@ -55,7 +55,7 @@ BuildRequires:	python3-pytest
 %endif
 %endif
 Requires:	openssl >= 1.0.1
-Requires:	python-cffi >= 1.4.1
+Requires:	python-cffi >= 1.7
 Requires:	python-six >= 1.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -89,7 +89,7 @@ Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Group:		Libraries/Python
 Requires:	openssl >= 1.0.1
-Requires:	python3-cffi >= 1.4.1
+Requires:	python3-cffi >= 1.7
 Requires:	python3-six >= 1.4.1
 
 %description -n python3-cryptography
