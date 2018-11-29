@@ -11,7 +11,7 @@ Version:	2.4.2
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
-#Source0Download: https://pypi.python.org/simple/cryptography/
+#Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
 # Source0-md5:	26bad6a40a373e2ad43dfa13dc4b162b
 URL:		https://cryptography.io/
@@ -20,38 +20,37 @@ BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
 BuildRequires:	python-cffi >= 1.7
-BuildRequires:	python-devel >= 1:2.6
+BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-enum34
-BuildRequires:	python-pyasn1 >= 0.1.8
-BuildRequires:	python-setuptools >= 11.3
+BuildRequires:	python-pytz
+BuildRequires:	python-setuptools >= 18.5
 BuildRequires:	python-six >= 1.4.1
 %if %{with tests}
+BuildRequires:	python-asn1crypto >= 0.21.0
 BuildRequires:	python-cryptography_vectors
 %if "%{py_ver}" >= "2.7"
 BuildRequires:	python-hypothesis >= 1.11.4
 %endif
-BuildRequires:	python-idna >= 2.0
+BuildRequires:	python-idna >= 2.1
 BuildRequires:	python-ipaddress
 BuildRequires:	python-iso8601
 BuildRequires:	python-pretend
-BuildRequires:	python-pyasn1_modules
-BuildRequires:	python-pytest
+BuildRequires:	python-pytest >= 3.6.0
 %endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-cffi >= 1.7
 BuildRequires:	python3-devel >= 1:3.4
-BuildRequires:	python3-pyasn1 >= 0.1.8
-BuildRequires:	python3-setuptools >= 11.3
+BuildRequires:	python3-setuptools >= 18.5
 BuildRequires:	python3-six >= 1.4.1
 %if %{with tests}
+BuildRequires:	python3-asn1crypto >= 0.21.0
 BuildRequires:	python3-cryptography_vectors
 BuildRequires:	python3-hypothesis >= 1.11.4
-BuildRequires:	python3-idna >= 2.0
+BuildRequires:	python3-idna >= 2.1
 BuildRequires:	python3-iso8601
 BuildRequires:	python3-pretend
-BuildRequires:	python3-pyasn1_modules
-BuildRequires:	python3-pytest
+BuildRequires:	python3-pytest >= 3.6.0
 %endif
 %endif
 Requires:	openssl >= 1.0.1
