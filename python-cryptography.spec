@@ -2,24 +2,25 @@
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
+%bcond_without	doc	# Sphinx documentation
 %bcond_with	tests	# test target [not all dependencies are currently available in PLD]
 
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	2.4.2
+Version:	2.7
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	26bad6a40a373e2ad43dfa13dc4b162b
+# Source0-md5:	7dfe1035cae43569e571318f000462a4
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.0.1
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
-BuildRequires:	python-cffi >= 1.7
+BuildRequires:	python-cffi >= 1.8
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-enum34
 BuildRequires:	python-pytz
@@ -36,10 +37,11 @@ BuildRequires:	python-ipaddress
 BuildRequires:	python-iso8601
 BuildRequires:	python-pretend
 BuildRequires:	python-pytest >= 3.6.0
+BuildRequires:	python-pytz
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-cffi >= 1.7
+BuildRequires:	python3-cffi >= 1.8
 BuildRequires:	python3-devel >= 1:3.4
 BuildRequires:	python3-setuptools >= 18.5
 BuildRequires:	python3-six >= 1.4.1
@@ -51,11 +53,14 @@ BuildRequires:	python3-idna >= 2.1
 BuildRequires:	python3-iso8601
 BuildRequires:	python3-pretend
 BuildRequires:	python3-pytest >= 3.6.0
+BuildRequires:	python3-pytz
 %endif
+%endif
+%if %{with doc}
+BuildRequires:	python3-sphinx_rtd_theme
+BuildRequires:	sphinx-pdg-3 >= 1.6.5
 %endif
 Requires:	openssl >= 1.0.1
-Requires:	python-cffi >= 1.7
-Requires:	python-six >= 1.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -88,8 +93,6 @@ Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Group:		Libraries/Python
 Requires:	openssl >= 1.0.1
-Requires:	python3-cffi >= 1.7
-Requires:	python3-six >= 1.4.1
 
 %description -n python3-cryptography
 cryptography is a package designed to expose cryptographic recipes and
@@ -116,6 +119,17 @@ wyprowadzające klucze.
 
 Ten pakiet zawiera moduły Pythona 3.
 
+%package apidocs
+Summary:	API documentation for cryptography module
+Summary(pl.UTF-8):	Dokumentacja API modułu cryptography
+Group:		Documentation
+
+%description apidocs
+API documentation for cryptography module.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API modułu cryptography.
+
 %prep
 %setup -q -n cryptography-%{version}
 
@@ -128,6 +142,11 @@ export CFLAGS="%{rpmcflags}"
 
 %if %{with python2}
 %py3_build %{?with_tests:test}
+%endif
+
+%if %{with doc}
+%{__make} -C docs html \
+	SPHINXBUILD=sphinx-build-3
 %endif
 
 %install
@@ -171,6 +190,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/cryptography/hazmat/primitives/ciphers/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives/kdf
 %{py_sitedir}/cryptography/hazmat/primitives/kdf/*.py[co]
+%dir %{py_sitedir}/cryptography/hazmat/primitives/serialization
+%{py_sitedir}/cryptography/hazmat/primitives/serialization/*.py[co]
 %dir %{py_sitedir}/cryptography/hazmat/primitives/twofactor
 %{py_sitedir}/cryptography/hazmat/primitives/twofactor/*.py[co]
 %dir %{py_sitedir}/cryptography/x509
@@ -213,6 +234,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/primitives/kdf
 %{py3_sitedir}/cryptography/hazmat/primitives/kdf/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/kdf/__pycache__
+%dir %{py3_sitedir}/cryptography/hazmat/primitives/serialization
+%{py3_sitedir}/cryptography/hazmat/primitives/serialization/*.py
+%{py3_sitedir}/cryptography/hazmat/primitives/serialization/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/primitives/twofactor
 %{py3_sitedir}/cryptography/hazmat/primitives/twofactor/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/twofactor/__pycache__
@@ -220,4 +244,10 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/cryptography/x509/*.py
 %{py3_sitedir}/cryptography/x509/__pycache__
 %{py3_sitedir}/cryptography-%{version}-py*.egg-info
+%endif
+
+%if %{with doc}
+%files apidocs
+%defattr(644,root,root,755)
+%doc docs/_build/html/{_downloads,_modules,_static,development,hazmat,x509,*.html,*.js}
 %endif
