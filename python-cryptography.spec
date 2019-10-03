@@ -123,6 +123,9 @@ Ten pakiet zawiera moduły Pythona 3.
 Summary:	API documentation for cryptography module
 Summary(pl.UTF-8):	Dokumentacja API modułu cryptography
 Group:		Documentation
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 API documentation for cryptography module.
