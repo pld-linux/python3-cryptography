@@ -1,9 +1,10 @@
+# TODO: when updating try to reenable all tests (two were failing in 2.7 with openssl 1.1.1d)
 #
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
 %bcond_without	doc	# Sphinx documentation
-%bcond_with	tests	# test target [not all dependencies are currently available in PLD]
+%bcond_without	tests	# unit test
 
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
@@ -15,6 +16,9 @@ Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
 # Source0-md5:	7dfe1035cae43569e571318f000462a4
+#Source1Download: https://pypi.org/simple/cryptography_vectors/
+Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
+# Source1-md5:	1a518a28ed9c924ca6c570aa8ea0c334
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.0.1
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
@@ -28,7 +32,6 @@ BuildRequires:	python-setuptools >= 18.5
 BuildRequires:	python-six >= 1.4.1
 %if %{with tests}
 BuildRequires:	python-asn1crypto >= 0.21.0
-BuildRequires:	python-cryptography_vectors
 %if "%{py_ver}" >= "2.7"
 BuildRequires:	python-hypothesis >= 1.11.4
 %endif
@@ -47,7 +50,6 @@ BuildRequires:	python3-setuptools >= 18.5
 BuildRequires:	python3-six >= 1.4.1
 %if %{with tests}
 BuildRequires:	python3-asn1crypto >= 0.21.0
-BuildRequires:	python3-cryptography_vectors
 BuildRequires:	python3-hypothesis >= 1.11.4
 BuildRequires:	python3-idna >= 2.1
 BuildRequires:	python3-iso8601
@@ -66,8 +68,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 cryptography is a package designed to expose cryptographic recipes and
 primitives to Python developers. Our goal is for it to be your
-"cryptographic standard library". It supports Python 2.6-2.7, Python
-3.2+, and PyPy.
+"cryptographic standard library". It supports Python 2.7, Python 3.4+,
+and PyPy.
 
 cryptography includes both high level recipes, and low level
 interfaces to common cryptographic algorithms such as symmetric
@@ -79,7 +81,7 @@ This package contains Python 2 modules.
 cryptography to pakiet zaprojektowany w celu udostępnienia funkcji i
 obiektów kryptograficznych programistom Pythona. Celem jest
 dostarczenie "standardowej biblioteki kryptograficznej". Obsługuje
-Pythona 2.6-2.7, Pythona 3.2+ oraz PyPy.
+Pythona 2.7, Pythona 3.4+ oraz PyPy.
 
 cryptography zawiera zarówno funkcje wysokopoziomowe, jak i
 niskopoziomowe interfejsy do popularnych algorytmów kryptograficznych,
@@ -97,8 +99,8 @@ Requires:	openssl >= 1.0.1
 %description -n python3-cryptography
 cryptography is a package designed to expose cryptographic recipes and
 primitives to Python developers. Our goal is for it to be your
-"cryptographic standard library". It supports Python 2.6-2.7, Python
-3.2+, and PyPy.
+"cryptographic standard library". It supports Python 2.7, Python 3.4+,
+and PyPy.
 
 cryptography includes both high level recipes, and low level
 interfaces to common cryptographic algorithms such as symmetric
@@ -110,7 +112,7 @@ This package contains Python 3 modules.
 cryptography to pakiet zaprojektowany w celu udostępnienia funkcji i
 obiektów kryptograficznych programistom Pythona. Celem jest
 dostarczenie "standardowej biblioteki kryptograficznej". Obsługuje
-Pythona 2.6-2.7, Pythona 3.2+ oraz PyPy.
+Pythona 2.7, Pythona 3.4+ oraz PyPy.
 
 cryptography zawiera zarówno funkcje wysokopoziomowe, jak i
 niskopoziomowe interfejsy do popularnych algorytmów kryptograficznych,
@@ -134,17 +136,31 @@ API documentation for cryptography module.
 Dokumentacja API modułu cryptography.
 
 %prep
-%setup -q -n cryptography-%{version}
+%setup -q -n cryptography-%{version} %{?with_tests:-a1}
+
+%if %{with tests}
+%{__mv} cryptography_vectors-%{version}/cryptography_vectors .
+%endif
 
 %build
 export CFLAGS="%{rpmcflags}"
 
 %if %{with python2}
-%py_build %{?with_tests:test}
+%py_build
+
+%if %{with tests}
+PYTHONPATH=$(pwd) \
+%{__python} -m pytest tests  -k 'not test_dh_parameters_supported and not test_load_ecdsa_no_named_curve'
+%endif
 %endif
 
 %if %{with python2}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%if %{with tests}
+PYTHONPATH=$(pwd) \
+%{__python3} -m pytest tests  -k 'not test_dh_parameters_supported and not test_load_ecdsa_no_named_curve'
+%endif
 %endif
 
 %if %{with doc}
