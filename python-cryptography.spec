@@ -9,16 +9,16 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	2.7
-Release:	2
+Version:	2.8
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	7dfe1035cae43569e571318f000462a4
+# Source0-md5:	77730058b556c6d9838679a94c6229ce
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	1a518a28ed9c924ca6c570aa8ea0c334
+# Source1-md5:	a744ed29bb9ef56b3a50317fea3b218e
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.0.1
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
@@ -146,21 +146,11 @@ Dokumentacja API modułu cryptography.
 export CFLAGS="%{rpmcflags}"
 
 %if %{with python2}
-%py_build
-
-%if %{with tests}
-PYTHONPATH=$(pwd) \
-%{__python} -m pytest tests  -k 'not test_dh_parameters_supported and not test_load_ecdsa_no_named_curve'
-%endif
+%py_build %{?with_tests:test}
 %endif
 
-%if %{with python2}
-%py3_build
-
-%if %{with tests}
-PYTHONPATH=$(pwd) \
-%{__python3} -m pytest tests  -k 'not test_dh_parameters_supported and not test_load_ecdsa_no_named_curve'
-%endif
+%if %{with python3}
+%py3_build %{?with_tests:test}
 %endif
 
 %if %{with doc}
