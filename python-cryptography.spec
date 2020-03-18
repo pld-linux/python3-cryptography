@@ -146,11 +146,21 @@ Dokumentacja API modułu cryptography.
 export CFLAGS="%{rpmcflags}"
 
 %if %{with python2}
-%py_build %{?with_tests:test}
+%py_build
+
+%if %{with tests}
+PYTHONPATH=$(echo $(pwd)/build-2/lib.*) \
+%{__python} -m pytest tests
+%endif
 %endif
 
 %if %{with python3}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%if %{with tests}
+PYTHONPATH=$(echo $(pwd)/build-3/lib.*) \
+%{__python3} -m pytest tests
+%endif
 %endif
 
 %if %{with doc}
@@ -258,5 +268,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc docs/_build/html/{_downloads,_modules,_static,development,hazmat,x509,*.html,*.js}
+%doc docs/_build/html/{_downloads,_static,development,hazmat,x509,*.html,*.js}
 %endif
