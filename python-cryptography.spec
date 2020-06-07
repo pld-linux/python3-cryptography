@@ -1,4 +1,3 @@
-# TODO: when updating try to reenable all tests (two were failing in 2.7 with openssl 1.1.1d)
 #
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
@@ -9,18 +8,18 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	2.8
+Version:	2.9.2
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	77730058b556c6d9838679a94c6229ce
+# Source0-md5:	89f355fd2500f7b7ce13999afc7cd092
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	a744ed29bb9ef56b3a50317fea3b218e
+# Source1-md5:	657349b8de73959fc49ba15fd7346b58
 URL:		https://cryptography.io/
-BuildRequires:	openssl-devel >= 1.0.1
+BuildRequires:	openssl-devel >= 1.0.2
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
@@ -45,7 +44,7 @@ BuildRequires:	python-pytz
 %endif
 %if %{with python3}
 BuildRequires:	python3-cffi >= 1.8
-BuildRequires:	python3-devel >= 1:3.4
+BuildRequires:	python3-devel >= 1:3.5
 BuildRequires:	python3-setuptools >= 18.5
 BuildRequires:	python3-six >= 1.4.1
 %if %{with tests}
@@ -62,7 +61,7 @@ BuildRequires:	python3-pytz
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3 >= 1.6.5
 %endif
-Requires:	openssl >= 1.0.1
+Requires:	openssl >= 1.0.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -94,7 +93,7 @@ Ten pakiet zawiera moduły Pythona 2.
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Group:		Libraries/Python
-Requires:	openssl >= 1.0.1
+Requires:	openssl >= 1.0.2
 
 %description -n python3-cryptography
 cryptography is a package designed to expose cryptographic recipes and
@@ -125,7 +124,7 @@ Ten pakiet zawiera moduły Pythona 3.
 Summary:	API documentation for cryptography module
 Summary(pl.UTF-8):	Dokumentacja API modułu cryptography
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
