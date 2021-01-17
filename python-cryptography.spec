@@ -8,33 +8,31 @@
 Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
-Version:	2.9.2
+Version:	3.3.1
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	89f355fd2500f7b7ce13999afc7cd092
+# Source0-md5:	6faa1a7125c500c0e1586ad342ba3b30
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	657349b8de73959fc49ba15fd7346b58
+# Source1-md5:	2a23fd073fc1f95a697ee96fc991e419
 URL:		https://cryptography.io/
-BuildRequires:	openssl-devel >= 1.0.2
+BuildRequires:	openssl-devel >= 1.1.0
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
-BuildRequires:	python-cffi >= 1.8
+BuildRequires:	python-cffi >= 1.12
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-enum34
 BuildRequires:	python-pytz
 BuildRequires:	python-setuptools >= 18.5
 BuildRequires:	python-six >= 1.4.1
 %if %{with tests}
-BuildRequires:	python-asn1crypto >= 0.21.0
 %if "%{py_ver}" >= "2.7"
 BuildRequires:	python-hypothesis >= 1.11.4
 %endif
-BuildRequires:	python-idna >= 2.1
 BuildRequires:	python-ipaddress
 BuildRequires:	python-iso8601
 BuildRequires:	python-pretend
@@ -43,14 +41,12 @@ BuildRequires:	python-pytz
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-cffi >= 1.8
-BuildRequires:	python3-devel >= 1:3.5
+BuildRequires:	python3-cffi >= 1.12
+BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	python3-setuptools >= 18.5
 BuildRequires:	python3-six >= 1.4.1
 %if %{with tests}
-BuildRequires:	python3-asn1crypto >= 0.21.0
 BuildRequires:	python3-hypothesis >= 1.11.4
-BuildRequires:	python3-idna >= 2.1
 BuildRequires:	python3-iso8601
 BuildRequires:	python3-pretend
 BuildRequires:	python3-pytest >= 3.6.0
@@ -61,7 +57,7 @@ BuildRequires:	python3-pytz
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3 >= 1.6.5
 %endif
-Requires:	openssl >= 1.0.2
+Requires:	openssl >= 1.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -93,7 +89,7 @@ Ten pakiet zawiera moduły Pythona 2.
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Group:		Libraries/Python
-Requires:	openssl >= 1.0.2
+Requires:	openssl >= 1.1.0
 
 %description -n python3-cryptography
 cryptography is a package designed to expose cryptographic recipes and
