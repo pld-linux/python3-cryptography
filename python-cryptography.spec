@@ -9,7 +9,7 @@ Summary:	Crypthography library for Python 2
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 2
 Name:		python-cryptography
 Version:	3.3.1
-Release:	2
+Release:	3
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
