@@ -104,9 +104,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS.rst README.rst LICENSE LICENSE.APACHE LICENSE.BSD
+%doc CHANGELOG.rst CONTRIBUTING.rst LICENSE LICENSE.APACHE LICENSE.BSD README.rst
 %dir %{py3_sitedir}/cryptography
 %{py3_sitedir}/cryptography/*.py
+%{py3_sitedir}/cryptography/py.typed
 %{py3_sitedir}/cryptography/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat
 %{py3_sitedir}/cryptography/hazmat/*.py
@@ -121,6 +122,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/cryptography/hazmat/bindings/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/__pycache__
 %attr(755,root,root) %{py3_sitedir}/cryptography/hazmat/bindings/_*.so
+%dir %{py3_sitedir}/cryptography/hazmat/bindings/_rust
+%{py3_sitedir}/cryptography/hazmat/bindings/_rust/*.pyi
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/openssl
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/__pycache__
