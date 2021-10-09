@@ -3,6 +3,8 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
+%define		crates_ver	35.0.0
+
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
@@ -16,15 +18,20 @@ Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptogra
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
 # Source1-md5:	8e9d050bd601d1788883fa361c69cf85
+# cd cryptography-%{version}/src/rust
+# cargo vendor
+# tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
+Source2:	%{name}-crates-%{crates_ver}.tar.xz
+# Source2-md5:	c3398eb08b99552f09b8b8f16d0d3910
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.0
-BuildRequires:	rpm-pythonprov >= 5.4.15-48
-BuildRequires:	rpmbuild(macros) >= 1.714
-BuildRequires:	rust
 BuildRequires:	python3-cffi >= 1.12
 BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	python3-setuptools >= 18.5
 BuildRequires:	python3-six >= 1.4.1
+BuildRequires:	rpm-pythonprov >= 5.4.15-48
+BuildRequires:	rpmbuild(macros) >= 2.004
+BuildRequires:	rust >= 1.41.0
 %if %{with tests}
 BuildRequires:	python3-hypothesis >= 1.11.4
 BuildRequires:	python3-iso8601
@@ -35,8 +42,11 @@ BuildRequires:	python3-pytz
 %if %{with doc}
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3 >= 1.6.5
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 %endif
 Requires:	openssl >= 1.1.0
+ExclusiveArch:	%{rust_arches}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -79,7 +89,30 @@ Dokumentacja API modułu cryptography.
 %{__mv} cryptography_vectors-%{version}/cryptography_vectors .
 %endif
 
+cd src/rust
+tar xf %{SOURCE2}
+# use our offline registry
+export CARGO_HOME="$(pwd)/.cargo"
+
+mkdir -p "$CARGO_HOME"
+cat >.cargo/config <<EOF
+[source.crates-io]
+registry = 'https://github.com/rust-lang/crates.io-index'
+replace-with = 'vendored-sources'
+
+[source.vendored-sources]
+directory = '$PWD/vendor'
+EOF
+
 %build
+export CARGO_HOME="$(pwd)/src/rust/.cargo"
+export CARGO_OFFLINE=true
+export RUSTFLAGS="%{rpmrustflags}"
+export CARGO_TERM_VERBOSE=true
+%ifarch x32
+export CARGO_BUILD_TARGET=x86_64-unknown-linux-gnux32
+%endif
+
 export CFLAGS="%{rpmcflags}"
 
 %py3_build
@@ -96,6 +129,14 @@ PYTHONPATH=$(echo $(pwd)/build-3/lib.*) \
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+export CARGO_HOME="$(pwd)/src/rust/.cargo"
+export CARGO_OFFLINE=true
+export RUSTFLAGS="%{rpmrustflags}"
+export CARGO_TERM_VERBOSE=true
+%ifarch x32
+export CARGO_BUILD_TARGET=x86_64-unknown-linux-gnux32
+%endif
 
 %py3_install
 
