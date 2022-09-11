@@ -37,7 +37,9 @@ BuildRequires:	rust >= 1.41.0
 BuildRequires:	python3-hypothesis >= 1.11.4
 BuildRequires:	python3-iso8601
 BuildRequires:	python3-pretend
-BuildRequires:	python3-pytest >= 3.6.0
+BuildRequires:	python3-pytest >= 6.2.0
+BuildRequires:	python3-pytest-benchmark
+BuildRequires:	python3-pytest-subtests
 BuildRequires:	python3-pytz
 %endif
 %if %{with doc}
