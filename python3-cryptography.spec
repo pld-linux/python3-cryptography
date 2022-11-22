@@ -3,26 +3,26 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	37.0.0
+%define		crates_ver	38.0.0
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	37.0.4
+Version:	38.0.3
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	9225cc6cc33b6acd2add39f7fb77faf7
+# Source0-md5:	2148f1283f22df0677e204e46bccaf06
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	3277494bc82a197118acf13517858281
+# Source1-md5:	6de6212b7b4dd45290f78e57e67cb093
 # cd cryptography-%{version}/src/rust
 # cargo vendor
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	b645f10a5cce0dc7508057f90b863b17
+# Source2-md5:	7e0cabcabe80dfab99928226e9b8c2a1
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.0
 BuildRequires:	python3-cffi >= 1.12
@@ -32,7 +32,7 @@ BuildRequires:	python3-setuptools_rust
 BuildRequires:	python3-six >= 1.4.1
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 2.004
-BuildRequires:	rust >= 1.41.0
+BuildRequires:	rust >= 1.48.0
 %if %{with tests}
 BuildRequires:	python3-hypothesis >= 1.11.4
 BuildRequires:	python3-iso8601
@@ -164,6 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/cryptography/hazmat/backends/openssl/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/bindings
 %{py3_sitedir}/cryptography/hazmat/bindings/*.py
+%{py3_sitedir}/cryptography/hazmat/bindings/*.pyi
 %{py3_sitedir}/cryptography/hazmat/bindings/__pycache__
 %attr(755,root,root) %{py3_sitedir}/cryptography/hazmat/bindings/_*.so
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/_rust
