@@ -3,26 +3,26 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	38.0.0
+%define		crates_ver	41.0.4
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	38.0.4
+Version:	41.0.4
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	2b8b23b955b43994f222f78faf17713b
+# Source0-md5:	e53b22d4baae5430e881f2f516effa67
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	4f0ef8446b0d0345767ec3e05d3168cd
+# Source1-md5:	baa05bd96d91129bb8123881fca0129d
 # cd cryptography-%{version}/src/rust
 # cargo vendor
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	7e0cabcabe80dfab99928226e9b8c2a1
+# Source2-md5:	4eea7f13daf00f5f4199546e983bac3a
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.0
 BuildRequires:	python3-cffi >= 1.12
@@ -164,11 +164,12 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/cryptography/hazmat/backends/openssl/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/bindings
 %{py3_sitedir}/cryptography/hazmat/bindings/*.py
-%{py3_sitedir}/cryptography/hazmat/bindings/*.pyi
 %{py3_sitedir}/cryptography/hazmat/bindings/__pycache__
 %attr(755,root,root) %{py3_sitedir}/cryptography/hazmat/bindings/_*.so
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/_rust
 %{py3_sitedir}/cryptography/hazmat/bindings/_rust/*.pyi
+%dir %{py3_sitedir}/cryptography/hazmat/bindings/_rust/openssl
+%{py3_sitedir}/cryptography/hazmat/bindings/_rust/openssl/*.pyi
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/openssl
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/__pycache__
