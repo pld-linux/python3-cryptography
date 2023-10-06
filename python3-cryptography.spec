@@ -22,33 +22,31 @@ Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/c
 # cargo vendor
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	4eea7f13daf00f5f4199546e983bac3a
+# Source2-md5:	940f9f8bc4bbdd7d1fe081e38cbf90d3
 URL:		https://cryptography.io/
-BuildRequires:	openssl-devel >= 1.1.0
+BuildRequires:	openssl-devel >= 1.1.1d
 BuildRequires:	python3-cffi >= 1.12
-BuildRequires:	python3-devel >= 1:3.6
-BuildRequires:	python3-setuptools >= 1:18.5
-BuildRequires:	python3-setuptools_rust
-BuildRequires:	python3-six >= 1.4.1
+BuildRequires:	python3-devel >= 1:3.7
+BuildRequires:	python3-setuptools >= 1:61.0.0
+BuildRequires:	python3-setuptools_rust >= 0.11.4
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 2.004
-BuildRequires:	rust >= 1.48.0
+BuildRequires:	rust >= 1.56.0
 %if %{with tests}
 BuildRequires:	python3-hypothesis >= 1.11.4
-BuildRequires:	python3-iso8601
 BuildRequires:	python3-pretend
 BuildRequires:	python3-pytest >= 6.2.0
 BuildRequires:	python3-pytest-benchmark
-BuildRequires:	python3-pytest-subtests
-BuildRequires:	python3-pytz
 %endif
 %if %{with doc}
-BuildRequires:	python3-sphinx_rtd_theme
-BuildRequires:	sphinx-pdg-3 >= 1.6.5
+# TODO: bump to 1.1.1 / 5.3.0 resp.
+BuildRequires:	python3-sphinx_rtd_theme >= 1.0.0
+BuildRequires:	sphinx-pdg-3 >= 4.5.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 %endif
-Requires:	openssl >= 1.1.0
+Requires:	openssl >= 1.1.1d
 ExclusiveArch:	%{rust_arches}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -121,6 +119,8 @@ export CFLAGS="%{rpmcflags}"
 %py3_build
 
 %if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS="pytest_benchmark.plugin" \
 PYTHONPATH=$(echo $(pwd)/build-3/lib.*) \
 %{__python3} -m pytest tests
 %endif
