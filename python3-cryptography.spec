@@ -9,7 +9,7 @@ Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
 Version:	41.0.4
-Release:	3
+Release:	4
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
