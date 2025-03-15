@@ -3,41 +3,45 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	41.0.4
+%define		crates_ver	44.0.2
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	41.0.4
-Release:	4
+Version:	44.0.2
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	e53b22d4baae5430e881f2f516effa67
+# Source0-md5:	9cb2411324687347a27d349d3e74eb7c
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	baa05bd96d91129bb8123881fca0129d
+# Source1-md5:	2b3e9ac5f648c96f010319e0a37784e8
 # cd cryptography-%{version}/src/rust
 # cargo vendor
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	940f9f8bc4bbdd7d1fe081e38cbf90d3
+# Source2-md5:	47e1e7d07ed257696406e111e254184d
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
+BuildRequires:	python3-build
 BuildRequires:	python3-cffi >= 1.12
 BuildRequires:	python3-devel >= 1:3.7
-BuildRequires:	python3-setuptools >= 1:61.0.0
-BuildRequires:	python3-setuptools_rust >= 0.11.4
+BuildRequires:	python3-installer
+BuildRequires:	python3-maturin >= 1
+BuildRequires:	python3-maturin < 2
+BuildRequires:	python3-setuptools
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
-BuildRequires:	rpmbuild(macros) >= 2.004
+BuildRequires:	rpmbuild(macros) >= 2.044
 BuildRequires:	rust >= 1.56.0
 %if %{with tests}
 BuildRequires:	python3-hypothesis >= 1.11.4
 BuildRequires:	python3-pretend
 BuildRequires:	python3-pytest >= 6.2.0
 BuildRequires:	python3-pytest-benchmark
+BuildRequires:	unzip
 %endif
 %if %{with doc}
 # TODO: bump to 1.1.1 / 5.3.0 resp.
@@ -117,12 +121,13 @@ export PKG_CONFIG_ALLOW_CROSS=1
 
 export CFLAGS="%{rpmcflags}"
 
-%py3_build
+%py3_build_pyproject
 
 %if %{with tests}
+unzip build-3/*.whl -d build-3/test-path
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 PYTEST_PLUGINS="pytest_benchmark.plugin" \
-PYTHONPATH=$(echo $(pwd)/build-3/lib.*) \
+PYTHONPATH=$(pwd)/build-3/test-path \
 %{__python3} -m pytest tests
 %endif
 
@@ -143,7 +148,7 @@ export CARGO_BUILD_TARGET=x86_64-unknown-linux-gnux32
 export PKG_CONFIG_ALLOW_CROSS=1
 %endif
 
-%py3_install
+%py3_install_pyproject
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -175,6 +180,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat/bindings/openssl
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/*.py
 %{py3_sitedir}/cryptography/hazmat/bindings/openssl/__pycache__
+%dir %{py3_sitedir}/cryptography/hazmat/decrepit
+%{py3_sitedir}/cryptography/hazmat/decrepit/*.py
+%{py3_sitedir}/cryptography/hazmat/decrepit/__pycache__
+%dir %{py3_sitedir}/cryptography/hazmat/decrepit/ciphers
+%{py3_sitedir}/cryptography/hazmat/decrepit/ciphers/*.py
+%{py3_sitedir}/cryptography/hazmat/decrepit/ciphers/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/primitives
 %{py3_sitedir}/cryptography/hazmat/primitives/*.py
 %{py3_sitedir}/cryptography/hazmat/primitives/__pycache__
@@ -196,7 +207,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/x509
 %{py3_sitedir}/cryptography/x509/*.py
 %{py3_sitedir}/cryptography/x509/__pycache__
-%{py3_sitedir}/cryptography-%{version}-py*.egg-info
+%{py3_sitedir}/cryptography-%{version}.dist-info
 
 %if %{with doc}
 %files apidocs
