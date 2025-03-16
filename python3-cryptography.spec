@@ -124,7 +124,7 @@ export CFLAGS="%{rpmcflags}"
 %py3_build_pyproject
 
 %if %{with tests}
-unzip build-3/*.whl -d build-3/test-path
+%__unzip -qo build-3/*.whl -d build-3/test-path
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 PYTEST_PLUGINS="pytest_benchmark.plugin" \
 PYTHONPATH=$(pwd)/build-3/test-path \
