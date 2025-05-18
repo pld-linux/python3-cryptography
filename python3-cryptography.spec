@@ -3,33 +3,33 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	44.0.3
+%define		crates_ver	45.0.2
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	44.0.3
+Version:	45.0.2
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	01959c3e2b352c5e42edfc0cfe0c2cd1
+# Source0-md5:	2b934ffd0563925781a748e309b1b203
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	73a53d4c95bba6a14801c6fb3b746140
+# Source1-md5:	1ec0e26e55bb109e7eafa656a95344ce
 # cd cryptography-%{version}/src/rust
 # cargo vendor
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	517c0d7f6b0b242f13e32642a0a0fe6e
+# Source2-md5:	cbbe3f5bc68c331b20e83b3d8d391fd6
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
 BuildRequires:	python3-build
 BuildRequires:	python3-cffi >= 1.12
 BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	python3-installer
-BuildRequires:	python3-maturin >= 1
+BuildRequires:	python3-maturin >= 1.8.6
 BuildRequires:	python3-maturin < 2
 BuildRequires:	python3-setuptools
 BuildRequires:	rpm-build >= 4.6
@@ -46,6 +46,7 @@ BuildRequires:	unzip
 %if %{with doc}
 # TODO: bump to 1.1.1 / 5.3.0 resp.
 BuildRequires:	python3-sphinx_rtd_theme >= 1.0.0
+BuildRequires:	python3-sphinx_inline_tabs
 BuildRequires:	sphinx-pdg-3 >= 4.5.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
