@@ -9,7 +9,7 @@ Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
 Version:	45.0.2
-Release:	1
+Release:	2
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
@@ -118,6 +118,7 @@ export CARGO_TERM_VERBOSE=true
 %ifarch x32
 export CARGO_BUILD_TARGET=x86_64-unknown-linux-gnux32
 export PKG_CONFIG_ALLOW_CROSS=1
+export PYO3_CROSS_LIB_DIR=%{_libdir}
 %endif
 
 export CFLAGS="%{rpmcflags}"
