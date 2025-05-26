@@ -25,29 +25,28 @@ Source2:	%{name}-crates-%{crates_ver}.tar.xz
 # Source2-md5:	cbbe3f5bc68c331b20e83b3d8d391fd6
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
-BuildRequires:	python3-build
-BuildRequires:	python3-cffi >= 1.12
+BuildRequires:	python3-build >= 1.0.0
+BuildRequires:	python3-cffi >= 1.14
 BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	python3-installer
 BuildRequires:	python3-maturin >= 1.8.6
 BuildRequires:	python3-maturin < 2
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-setuptools >= 1:75
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 2.044
 BuildRequires:	rust >= 1.56.0
 %if %{with tests}
-BuildRequires:	python3-hypothesis >= 1.11.4
-BuildRequires:	python3-pretend
-BuildRequires:	python3-pytest >= 6.2.0
-BuildRequires:	python3-pytest-benchmark
+BuildRequires:	python3-certifi >= 2024
+BuildRequires:	python3-pretend >= 0.7
+BuildRequires:	python3-pytest >= 7.4.0
+BuildRequires:	python3-pytest-benchmark >= 4.0
 BuildRequires:	unzip
 %endif
 %if %{with doc}
-# TODO: bump to 1.1.1 / 5.3.0 resp.
-BuildRequires:	python3-sphinx_rtd_theme >= 1.0.0
+BuildRequires:	python3-sphinx_rtd_theme >= 3.0.0
 BuildRequires:	python3-sphinx_inline_tabs
-BuildRequires:	sphinx-pdg-3 >= 4.5.0
+BuildRequires:	sphinx-pdg-3 >= 5.3.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 %endif
@@ -101,7 +100,7 @@ tar xf %{SOURCE2}
 export CARGO_HOME="$(pwd)/.cargo"
 
 mkdir -p "$CARGO_HOME"
-cat >.cargo/config <<EOF
+cat >.cargo/config.toml <<EOF
 [source.crates-io]
 registry = 'https://github.com/rust-lang/crates.io-index'
 replace-with = 'vendored-sources'
@@ -125,8 +124,11 @@ export CFLAGS="%{rpmcflags}"
 
 %py3_build_pyproject
 
+%if %{with tests} || %{with doc}
+%{__unzip} -qo build-3/*.whl -d build-3/test-path
+%endif
+
 %if %{with tests}
-%__unzip -qo build-3/*.whl -d build-3/test-path
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 PYTEST_PLUGINS="pytest_benchmark.plugin" \
 PYTHONPATH=$(pwd)/build-3/test-path \
@@ -134,6 +136,7 @@ PYTHONPATH=$(pwd)/build-3/test-path \
 %endif
 
 %if %{with doc}
+PYTHONPATH=$(pwd)/build-3/test-path \
 %{__make} -C docs html \
 	SPHINXBUILD=sphinx-build-3
 %endif
