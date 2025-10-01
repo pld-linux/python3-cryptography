@@ -3,33 +3,33 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	45.0.4
+%define		crates_ver	46.0.2
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	45.0.4
+Version:	46.0.2
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	6d8a9d089f9c434c200e51d53cfa2ea5
+# Source0-md5:	620137118e7b784f60e2658f7d861a2f
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	76f9e68acd6adbfdea3648cc77284e72
+# Source1-md5:	3138852abcc5200f3ad18f20171aef6c
 # cd cryptography-%{version}/src/rust
 # cargo vendor
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	0b6a97842d4a807a250ab556c67889a1
+# Source2-md5:	553b3bd78865ed4e6515c08216bff0b3
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
 BuildRequires:	python3-build >= 1.0.0
-BuildRequires:	python3-cffi >= 1.14
+BuildRequires:	python3-cffi >= 2.0
 BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	python3-installer
-BuildRequires:	python3-maturin >= 1.8.6
+BuildRequires:	python3-maturin >= 1.9.4
 BuildRequires:	python3-maturin < 2
 BuildRequires:	python3-setuptools >= 1:75
 BuildRequires:	rpm-build >= 4.6
@@ -168,6 +168,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/cryptography/hazmat
 %{py3_sitedir}/cryptography/hazmat/*.py
 %{py3_sitedir}/cryptography/hazmat/__pycache__
+%dir %{py3_sitedir}/cryptography/hazmat/asn1
+%{py3_sitedir}/cryptography/hazmat/asn1/*.py
+%{py3_sitedir}/cryptography/hazmat/asn1/__pycache__
 %dir %{py3_sitedir}/cryptography/hazmat/backends
 %{py3_sitedir}/cryptography/hazmat/backends/*.py
 %{py3_sitedir}/cryptography/hazmat/backends/__pycache__
