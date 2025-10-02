@@ -27,7 +27,7 @@ URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
 BuildRequires:	python3-build >= 1.0.0
 BuildRequires:	python3-cffi >= 2.0
-BuildRequires:	python3-devel >= 1:3.7
+BuildRequires:	python3-devel >= 1:3.9.2
 BuildRequires:	python3-installer
 BuildRequires:	python3-maturin >= 1.9.4
 BuildRequires:	python3-maturin < 2
@@ -35,7 +35,7 @@ BuildRequires:	python3-setuptools >= 1:75
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 2.044
-BuildRequires:	rust >= 1.56.0
+BuildRequires:	rust >= 1.74.0
 %if %{with tests}
 BuildRequires:	python3-certifi >= 2024
 BuildRequires:	python3-pretend >= 0.7
