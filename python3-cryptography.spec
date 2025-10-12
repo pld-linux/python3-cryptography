@@ -34,7 +34,7 @@ BuildRequires:	python3-maturin < 2
 BuildRequires:	python3-setuptools >= 1:75
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
-BuildRequires:	rpmbuild(macros) >= 2.044
+BuildRequires:	rpmbuild(macros) >= 2.050
 BuildRequires:	rust >= 1.74.0
 %if %{with tests}
 BuildRequires:	python3-certifi >= 2024
@@ -50,6 +50,7 @@ BuildRequires:	sphinx-pdg-3 >= 5.3.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 %endif
+%{?rust_req}
 Requires:	openssl >= 1.1.1d
 ExclusiveArch:	%{rust_arches}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
