@@ -3,26 +3,27 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	46.0.2
+%define		crates_ver	46.0.7
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	46.0.2
+Version:	46.0.7
 Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	620137118e7b784f60e2658f7d861a2f
+# Source0-md5:	c9c5834d6a4f3382ab97377c8fffd49b
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	3138852abcc5200f3ad18f20171aef6c
+# Source1-md5:	38d6a81188574633baab0148c8c1421f
 # cd cryptography-%{version}/src/rust
-# cargo vendor
+# cargo vendor --manifest-path ../../Cargo.toml
+# cp ../../Cargo.lock .
 # tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
 Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	553b3bd78865ed4e6515c08216bff0b3
+# Source2-md5:	93f7c91afc14b3de8069c9ae45820b11
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
 BuildRequires:	python3-build >= 1.0.0
