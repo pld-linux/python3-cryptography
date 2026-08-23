@@ -3,40 +3,39 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit test
 
-%define		crates_ver	46.0.7
+%define		crates_ver	50.0.0
 
 Summary:	Crypthography library for Python 3
 Summary(pl.UTF-8):	Biblioteka Cryptography dla Pythona 3
 Name:		python3-cryptography
-Version:	46.0.7
-Release:	2
+Version:	50.0.0
+Release:	1
 License:	Apache v2.0 or BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/cryptography/
 Source0:	https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-%{version}.tar.gz
-# Source0-md5:	c9c5834d6a4f3382ab97377c8fffd49b
+# Source0-md5:	34159691358a924504ca0877c73bf75c
 #Source1Download: https://pypi.org/simple/cryptography_vectors/
 Source1:	https://files.pythonhosted.org/packages/source/c/cryptography-vectors/cryptography_vectors-%{version}.tar.gz
-# Source1-md5:	38d6a81188574633baab0148c8c1421f
-# cd cryptography-%{version}/src/rust
-# cargo vendor --manifest-path ../../Cargo.toml
-# cp ../../Cargo.lock .
-# tar cJf python3-cryptography-crates-%{version}.tar.xz vendor Cargo.lock
-Source2:	%{name}-crates-%{crates_ver}.tar.xz
-# Source2-md5:	93f7c91afc14b3de8069c9ae45820b11
+# Source1-md5:	fa59de8c35d5abeec1c8c6d2c6854017
+# cd cryptography-%{version}
+# cargo vendor-filterer --platform='*-unknown-linux-*' --tier=2
+# tar cJf cryptography-crates-%{version}.tar.xz vendor Cargo.lock
+Source2:	cryptography-crates-%{crates_ver}.tar.xz
+# Source2-md5:	d14be203c87399c800a4c5c0e4f0a7ac
 URL:		https://cryptography.io/
 BuildRequires:	openssl-devel >= 1.1.1d
 BuildRequires:	python3-build >= 1.0.0
 BuildRequires:	python3-cffi >= 2.0
 BuildRequires:	python3-devel >= 1:3.9.2
 BuildRequires:	python3-installer
-BuildRequires:	python3-maturin >= 1.9.4
+BuildRequires:	python3-maturin >= 1.14.1
 BuildRequires:	python3-maturin < 2
 BuildRequires:	python3-setuptools >= 1:75
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov >= 5.4.15-48
 BuildRequires:	rpmbuild(macros) >= 2.050
-BuildRequires:	rust >= 1.74.0
+BuildRequires:	rust >= 1.83.0
 %if %{with tests}
 BuildRequires:	python3-certifi >= 2024
 BuildRequires:	python3-pretend >= 0.7
@@ -90,14 +89,12 @@ API documentation for cryptography module.
 Dokumentacja API modułu cryptography.
 
 %prep
-%setup -q -n cryptography-%{version} %{?with_tests:-a1}
+%setup -q -n cryptography-%{version} %{?with_tests:-a1} -a2
 
 %if %{with tests}
 %{__mv} cryptography_vectors-%{version}/cryptography_vectors .
 %endif
 
-cd src/rust
-tar xf %{SOURCE2}
 # use our offline registry
 export CARGO_HOME="$(pwd)/.cargo"
 
@@ -112,7 +109,7 @@ directory = '$PWD/vendor'
 EOF
 
 %build
-export CARGO_HOME="$(pwd)/src/rust/.cargo"
+export CARGO_HOME="$(pwd)/.cargo"
 export CARGO_OFFLINE=true
 export RUSTFLAGS="%{rpmrustflags}"
 export CARGO_TERM_VERBOSE=true
@@ -146,7 +143,7 @@ PYTHONPATH=$(pwd)/build-3/test-path \
 %install
 rm -rf $RPM_BUILD_ROOT
 
-export CARGO_HOME="$(pwd)/src/rust/.cargo"
+export CARGO_HOME="$(pwd)/.cargo"
 export CARGO_OFFLINE=true
 export RUSTFLAGS="%{rpmrustflags}"
 export CARGO_TERM_VERBOSE=true
